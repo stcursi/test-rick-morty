@@ -1,0 +1,9 @@
+.card-character {
+    width: 19rem;
+    min-height: 663px;
+    margin: 16px 0px 6px 0px;
+}
+
+.location-text {
+    max-width: 90%;
+}
