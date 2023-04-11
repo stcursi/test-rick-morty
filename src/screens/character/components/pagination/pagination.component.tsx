@@ -20,7 +20,7 @@ export const PaginationComponent = (props: PaginationComponentProps) => {
 
     const startCountNumberPosition = (currentPosition: number) => {
         const arrayOfNumber: number[] = [];
-        if ((position+visiblePagesNumber) > lastPage) {
+        if ((position+visiblePagesNumber) > lastPage && currentPosition !== 1) {
            currentPosition = position - (visiblePagesNumber-1);
         } 
         for (let i = 1; i <= visiblePagesNumber; i++) {
@@ -61,7 +61,7 @@ export const PaginationComponent = (props: PaginationComponentProps) => {
     const onClickPrevious = (pageNumber: number) => {
         setCurrentPage(pageNumber);
         if (pageNumber === visiblePagesNumber) {
-            startCountNumberPosition(0)
+            startCountNumberPosition(1)
         }
         if (pageNumber <= (paginationNumbers[paginationNumbers.length - 1] - visiblePagesNumber)) {
             setPaginationNumbers((prev) => {
@@ -85,7 +85,7 @@ export const PaginationComponent = (props: PaginationComponentProps) => {
                         <a className={`page-link`}
                             onClick={() => {
                                 onClickPaginationNumber(1);
-                                startCountNumberPosition(0);
+                                startCountNumberPosition(1);
                             }}
                             role="button">
                             1
