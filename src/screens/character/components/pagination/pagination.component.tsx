@@ -20,6 +20,9 @@ export const PaginationComponent = (props: PaginationComponentProps) => {
 
     const startCountNumberPosition = (currentPosition: number) => {
         const arrayOfNumber: number[] = [];
+        if ((position+visiblePagesNumber) > lastPage) {
+           currentPosition = position - (visiblePagesNumber-1);
+        } 
         for (let i = 1; i <= visiblePagesNumber; i++) {
             arrayOfNumber.push(i+(currentPosition-1));
         }

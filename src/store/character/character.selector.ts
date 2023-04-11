@@ -26,8 +26,13 @@ const getCharacterPageableRequest = (state: RootState): PaegableRequestInfo => {
     return state.characterReducer.paegableRequest
 }
 
+const getIsLoading = (state: RootState): boolean => {
+    return state.characterReducer.isLoading;
+}
+
 export const characterSelector = {
     getCharacters,
+    getIsLoading,
     getAllCharactersCount,
     getCharacterEpisodes,
     getCharacterName,

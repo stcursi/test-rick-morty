@@ -12,6 +12,7 @@ import { locationActions } from "../../store/location/location.action";
 import { locationSelector } from "../../store/location/location.selector";
 import { CharacterCardComponent } from "./components/characterCard/characterCard.component";
 import { PaginationComponent } from "./components/pagination/pagination.component";
+import './characterScreen.css'
 
 export const CharactersScreen = () => {
 
@@ -27,7 +28,7 @@ export const CharactersScreen = () => {
     const [typeOfLocation, setTypeOfLocation] = useState<LocationType>();
 
     useEffect(() => {
-        dispatch(characterActions.fetchCharacter({pageNumber: getCurrentPage}))
+        dispatch(characterActions.fetchCharacter({ pageNumber: getCurrentPage }))
     }, []);
 
     useEffect(() => {
@@ -100,16 +101,16 @@ export const CharactersScreen = () => {
             <div className="row">
                 {characters.map((ch, index) => <div key={index} className="col-sm-12 col-md-6 col-lg-3">
                     <CharacterCardComponent character={ch}
-                     onClickOnEpisodes={onClickOnEpisodes}
-                     onClickLocationLink={onClickLocation} />
+                        onClickOnEpisodes={onClickOnEpisodes}
+                        onClickLocationLink={onClickLocation} />
                 </div>)}
             </div>
-            <div className="row mt-4">
+            {characters.length !== 0 ? <div className="row mt-4">
                 <PaginationComponent onClickPage={onClickPagination}
                     visiblePagesNumber={4}
                     position={getCurrentPage === 0 ? 1 : getCurrentPage}
                     lastPage={pageableRequest.pages} />
-            </div>
+            </div> : <></>}
             <LocationModal show={showLocationModal} onHide={() => {
                 setShowLocationModal(false);
                 dispatch(locationActions.resetLocationStore());
