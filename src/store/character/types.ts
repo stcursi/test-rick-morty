@@ -5,17 +5,19 @@ export interface CharacterState {
     paegableRequest: PaegableRequestInfo
     isLoading: boolean
     isError: boolean
-    count: number
+    count: number,
+    page: number,
+    selectedCharacter?: CharacterDTO
 }
 
 export interface PaegableRequestInfo {
-    count: number,
-    next: string,
-    prev: string,
+    count: number
+    next: string
+    prev: string
     pages: number
 }
 
 export interface CharacterResponseDTO {
-    info: PaegableRequestInfo,
+    info: PaegableRequestInfo
     results: CharacterDTO[]
 }

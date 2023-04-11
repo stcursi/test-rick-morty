@@ -6,12 +6,12 @@ const fetchLocation = createAsyncThunk(
     'fetchLocation',
     async (request: {locationUrl: string}, thunkAPI) => {
         try {
-            console.debug('fetchCharacter');
+            console.debug('fetchLocation');
             const response: LocationDTO = await rickAndMortyService.getLocation(request.locationUrl);
-            console.debug('fetchCharacter response', response);
+            console.debug('fetchLocation response', response);
             return response;
         } catch (e) {
-            console.error('fetchCharacter action error ', e)
+            console.error('fetchLocation action error ', e)
             throw e;
         }
     }

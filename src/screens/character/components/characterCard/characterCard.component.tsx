@@ -4,7 +4,8 @@ import './characterCard.css';
 
 interface CharacterCardComponentProps {
     character: CharacterDTO,
-    onClickLocationLink: (locationUrl: string, locationType: LocationType) => void
+    onClickLocationLink: (locationUrl: string, locationType: LocationType) => void,
+    onClickOnEpisodes: (character: CharacterDTO) => void
 }
 
 const getPrettySpeciesBadge = (species: Species) => {
@@ -54,7 +55,7 @@ const getPrettyGenderIcon = (gender: Gender) => {
 
 export const CharacterCardComponent = (props: CharacterCardComponentProps) => {
 
-    const { character, onClickLocationLink } = props;
+    const { character, onClickLocationLink, onClickOnEpisodes} = props;
 
     return (
         <div className="card card-character shadow">
@@ -74,7 +75,7 @@ export const CharacterCardComponent = (props: CharacterCardComponentProps) => {
                 <li className="list-group-item d-flex">Last seen: {getPrettyLocation(character.location.name, character.location.url, onClickLocationLink, LocationType.LAST)}</li>
             </ul>
             <div className="card-body">
-                <button type="button" className="btn btn-primary">
+                <button type="button" className="btn btn-primary" onClick={() => onClickOnEpisodes(character)}>
                     Episodes: <span className="badge bg-secondary">{character.episode?.length}</span>
                 </button>
             </div>

@@ -2,13 +2,17 @@ import {createReducer} from '@reduxjs/toolkit';
 import { characterActions } from './character.action';
 import { CharacterState } from './types';
 
-const {fetchCharacter} = characterActions;
+const {
+    fetchCharacter,
+    setSelectedCharacter
+} = characterActions;
 
 const initialState: CharacterState = {
     isError: false,
     isLoading: false,
     characters: [],
     count: 0,
+    page: 0,
     paegableRequest: {
         count: 0,
         next: '',
@@ -30,9 +34,10 @@ export const characterReducer = {
             .addCase(fetchCharacter.fulfilled, (state, action) => {
                 return {
                     ...state,
-                    characters: action.payload.results,
-                    paegableRequest: action.payload.info,
-                    count: action.payload.info?.count || 0,
+                    characters: action.payload.data.results,
+                    paegableRequest: action.payload.data.info,
+                    count: action.payload.data.info?.count || 0,
+                    page: action.payload.currentPage,
                     isError: false,
                     isLoading: false
                 }
@@ -42,6 +47,12 @@ export const characterReducer = {
                     ...state,
                     isError: true,
                     isLoading: false
+                }
+            })
+            .addCase(setSelectedCharacter, (state, action) => {
+                return {
+                    ...state,
+                    selectedCharacter: action.payload
                 }
             })
     })

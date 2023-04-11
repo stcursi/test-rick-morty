@@ -2,25 +2,26 @@ import { useEffect, useState } from "react";
 
 interface PaginationComponentProps {
     lastPage: number,
+    position: number,
     visiblePagesNumber: number,
     onClickPage: (page: number) => void
 }
 
 export const PaginationComponent = (props: PaginationComponentProps) => {
 
-    const { visiblePagesNumber, lastPage, onClickPage } = props;
+    const { visiblePagesNumber, lastPage, position, onClickPage } = props;
 
-    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [currentPage, setCurrentPage] = useState<number>(position);
     const [paginationNumbers, setPaginationNumbers] = useState<number[]>([]);
 
     useEffect(() => {
-        startCountNumberPosition();
+        startCountNumberPosition(position);
     }, [])
 
-    const startCountNumberPosition = () => {
+    const startCountNumberPosition = (currentPosition: number) => {
         const arrayOfNumber: number[] = [];
         for (let i = 1; i <= visiblePagesNumber; i++) {
-            arrayOfNumber.push(i);
+            arrayOfNumber.push(i+(currentPosition-1));
         }
         setPaginationNumbers(arrayOfNumber)
     }
@@ -57,7 +58,7 @@ export const PaginationComponent = (props: PaginationComponentProps) => {
     const onClickPrevious = (pageNumber: number) => {
         setCurrentPage(pageNumber);
         if (pageNumber === visiblePagesNumber) {
-            startCountNumberPosition()
+            startCountNumberPosition(0)
         }
         if (pageNumber <= (paginationNumbers[paginationNumbers.length - 1] - visiblePagesNumber)) {
             setPaginationNumbers((prev) => {
@@ -81,7 +82,7 @@ export const PaginationComponent = (props: PaginationComponentProps) => {
                         <a className={`page-link`}
                             onClick={() => {
                                 onClickPaginationNumber(1);
-                                startCountNumberPosition();
+                                startCountNumberPosition(0);
                             }}
                             role="button">
                             1

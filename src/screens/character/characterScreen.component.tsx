@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { Modal, Button } from "react-bootstrap";
 import { CharacterDTO } from "../../model/character";
@@ -15,16 +16,18 @@ import { PaginationComponent } from "./components/pagination/pagination.componen
 export const CharactersScreen = () => {
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const characters: CharacterDTO[] = useSelector(characterSelector.getCharacters);
     const allCharactersCount: number = useSelector(characterSelector.getAllCharactersCount);
+    const getCurrentPage: number = useSelector(characterSelector.getCurrentPage);
     const pageableRequest: PaegableRequestInfo = useSelector(characterSelector.getCharacterPageableRequest);
     const selectedLocation: LocationDTO | undefined = useSelector(locationSelector.getSelectedLocation);
     const [showLocationModal, setShowLocationModal] = useState<boolean>(false);
     const [typeOfLocation, setTypeOfLocation] = useState<LocationType>();
 
     useEffect(() => {
-        dispatch(characterActions.fetchCharacter({}))
+        dispatch(characterActions.fetchCharacter({pageNumber: getCurrentPage}))
     }, []);
 
     useEffect(() => {
@@ -40,6 +43,11 @@ export const CharactersScreen = () => {
     const onClickLocation = (locationUrl: string, locationType: LocationType) => {
         dispatch(locationActions.fetchLocation({ locationUrl }));
         setTypeOfLocation(locationType);
+    }
+
+    const onClickOnEpisodes = (character: CharacterDTO) => {
+        dispatch(characterActions.setSelectedCharacter(character));
+        navigate('episodes');
     }
 
     const LocationModal = (props: { show: boolean, onHide: () => void }) => {
@@ -91,12 +99,15 @@ export const CharactersScreen = () => {
             </div>
             <div className="row">
                 {characters.map((ch, index) => <div key={index} className="col-sm-12 col-md-6 col-lg-3">
-                    <CharacterCardComponent character={ch} onClickLocationLink={onClickLocation} />
+                    <CharacterCardComponent character={ch}
+                     onClickOnEpisodes={onClickOnEpisodes}
+                     onClickLocationLink={onClickLocation} />
                 </div>)}
             </div>
             <div className="row mt-4">
                 <PaginationComponent onClickPage={onClickPagination}
                     visiblePagesNumber={4}
+                    position={getCurrentPage === 0 ? 1 : getCurrentPage}
                     lastPage={pageableRequest.pages} />
             </div>
             <LocationModal show={showLocationModal} onHide={() => {
