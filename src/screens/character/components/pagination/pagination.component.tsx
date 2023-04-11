@@ -64,7 +64,6 @@ export const PaginationComponent = (props: PaginationComponentProps) => {
                 const arrayToChange = [...prev];
                 arrayToChange.pop();
                 arrayToChange.unshift(pageNumber);
-                console.log('ARRAAAAAAY', arrayToChange);
                 return arrayToChange;
             });
         }

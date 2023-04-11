@@ -5,5 +5,15 @@
 }
 
 .location-text {
-    max-width: 90%;
+    max-width: 70%;
+}
+
+.location-unknown {
+    margin-left: 2px !important;
+}
+
+.status-badge {
+    margin-left: 5px;
+    padding: 0.4rem;
+    height: 13px;
 }

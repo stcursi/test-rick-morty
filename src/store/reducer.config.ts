@@ -1,9 +1,11 @@
 import {combineReducers} from 'redux';
 import { characterReducer } from './character/character.reducer';
+import { locationReducer } from './location/location.reducer';
 import { AppAction } from './types';
 
 const appReducer = combineReducers({
     ...characterReducer,
+    ...locationReducer
 });
 
 export const RESET_STORE = 'RESET_STORE';
